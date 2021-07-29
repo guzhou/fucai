@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-ch">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>双色球幸运大选号</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    body {
+      background: #00ccff;
+      font-family: "Microsoft YaHei", "Arial", "宋体", sans-serif;
+      color: #fff;
+    }
+
+    /* 容器 */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-top: 15px;
+    }
+
+    .title {
+      margin: 0 auto;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .ball-area {
+      padding-top: 30px;
+    }
+
+    /* 球 */
+    .ball-box {
+      display: inline-block;
+      width: 49%;
+      border: solid 2px #00ff00;
+      vertical-align: top;
+      text-align: center;
+    }
+
+    .ball-title {
+      font-size: 16px;
+      padding: 15px 0;
+    }
+
+    .balls {
+      width: 96%;
+      min-height: 156px;
+      margin: 0 auto;
+      background: #00ff00;
+      margin-bottom: 15px;
+      padding: 15px 0;
+      text-align: left;
+    }
+
+    .ball-num {
+      display: inline-block;
+      border: solid 1px #fff;
+      color: #000000;
+      border-radius: 50%;
+      background: #fff;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      line-height: 40px;
+      text-align: center;
+      margin-top: 10px;
+      cursor: pointer;
+      /* margin-left: 5px; */
+    }
+
+    .rand_btn {
+      display: block;
+      border: solid 1px #ff3300;
+      width: 120px;
+      margin: 0 auto 15px auto;
+      color: #ff3300;
+      border-radius: 5px;
+      background: #f2f2f2;
+    }
+
+    .rand_btn:hover {
+      background: #ff3300;
+      color: #FFF;
+    }
+
+    #rand-blue {
+      border: solid 1px #000066;
+      color: #000066;
+    }
+
+    #rand-blue:hover {
+      background: #000066;
+      color: #FFF;
+    }
+
+    .tool {
+      width: 100%;
+      min-height: 65px;
+      font-size: 0;
+    }
+
+    .tool-col {
+      display: inline-block;
+      width: 33.33333%;
+      min-height: 65px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    label {
+      color: #FFFFFF;
+      font-weight: bold;
+      height: 50px;
+      font-size: 23px;
+      vertical-align: middle;
+      margin: 12.5px 0;
+    }
+
+    #multiple {
+      width: 75px;
+      height: 30px;
+      vertical-align: middle;
+      margin: 17.5px 0;
+    }
+
+    .default-btn {
+      border: solid 1px #000000;
+      width: 120px;
+      color: #000000;
+      background: #f2f2f2;
+      border-radius: 5px;
+      height: 30px;
+      vertical-align: middle;
+      cursor: pointer;
+      margin: 17.5px 0;
+    }
+
+    .default-btn:hover {
+      background: chartreuse;
+      color: #FFFFFF;
+      border: solid 1px chartreuse;
+    }
+
+    .default-btn:focus {
+      outline: none;
+    }
+
+    .show {
+      width: 98%;
+      margin: 0 auto;
+      border: solid 2px #00ff00;
+      min-height: 280px;
+      text-align: center;
+    }
+
+    .show-title {
+      color: #FFF;
+      font-size: 25px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      display: block;
+      text-align: center;
+    }
+
+    .show-content {
+      width: 70%;
+      background: #F0F8FF;
+      height: 170px;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 20px;
+    }
+
+    .show-content-title {
+      text-align: center;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: #e6e6e6;
+      display: block;
+      padding: 10px 0;
+    }
+
+    #show-money {
+      width: 100%;
+      height: 150px;
+      overflow: scroll;
+      text-align: left;
+      font-size: 0;
+    }
+
+    #show-num {
+      width: 100%;
+      position: relative;
+      top: -20px;
+      background: #e6e6e6;
+      color: #000;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    #show-num span {
+      color: red;
+    }
+
+    .show-right {
+      width: 28%;
+      display: inline-block;
+      margin-top: 20px;
+      vertical-align: top;
+    }
+
+    .show-right a {
+      display: block;
+      text-align: center;
+      height: auto;
+      margin: 0 auto 24px auto;
+    }
+
+    .show-time {
+      padding: 15px 0 30px 0;
+    }
+
+    .show-time p {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .show-info {
+      font-size: 20px;
+      width: 50%;
+      display: inline-block;
+      padding: 3px 0;
+      color: #000;
+      text-align: center;
+    }
+
+    .show-change {
+      color: #000000;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .show-change:hover {
+      color: chartreuse;
+    }
+
+    .show-del {
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .show-del:hover {
+      color: chartreuse;
+    }
+
+    .show-time span {
+      color: #ff2c2c;
+    }
+
+    /*响应式处理*/
+    @media (max-width: 767px) {
+
+      /* <=768的设备  */
+      .ball-area {
+        width: 95%;
+        margin: 0 2.5%;
+      }
+
+      .show {
+        width: 95%;
+        margin: 0 2.5%;
+      }
+
+      .ball-box {
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      .tool-col {
+        width: 100%;
+      }
+
+      .show-content {
+        width: 96%;
+      }
+
+      .show-info {
+        width: 100%;
+      }
+
+      .show-right {
+        padding-top: 30px;
+        width: 100%;
+      }
+    }
+
+    /*禁止选中文字*/
+    .user-select {
+      -moz-user-select: none;
+      /*火狐FF*/
+
+      -webkit-user-select: none;
+      /*webkit浏览器*/
+
+      -ms-user-select: none;
+      /*IE10*/
+
+      -khtml-user-select: none;
+      /*早期浏览器*/
+
+      -o-user-select: none;
+      /*opera浏览器*/
+
+      user-select: none;
+    }
+
+    /*红蓝球选中后样式*/
+    .red-ball .active {
+      background: #ff3300;
+      color: #FFF;
+    }
+
+    .blue-ball .active {
+      background: #000066;
+      color: #FFF;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container user-select">
+    <div class="title">
+      <h1>双色球幸运大选号</h1>
+    </div>
+    <div class="ball-area">
+      <div class="ball-box">
+        <div class="ball-title">
+          <h2>红球区</h2>
+        </div>
+        <div class="balls red-ball">
+          <div class="ball-num">01</div>
+          <div class="ball-num">02</div>
+          <div class="ball-num">03</div>
+          <div class="ball-num">04</div>
+          <div class="ball-num">05</div>
+          <div class="ball-num">06</div>
+          <div class="ball-num">07</div>
+          <div class="ball-num">08</div>
+          <div class="ball-num">09</div>
+          <div class="ball-num">10</div>
+          <div class="ball-num">11</div>
+          <div class="ball-num">12</div>
+          <div class="ball-num">13</div>
+          <div class="ball-num">14</div>
+          <div class="ball-num">15</div>
+          <div class="ball-num">16</div>
+          <div class="ball-num">17</div>
+          <div class="ball-num">18</div>
+          <div class="ball-num">19</div>
+          <div class="ball-num">20</div>
+          <div class="ball-num">21</div>
+          <div class="ball-num">22</div>
+          <div class="ball-num">23</div>
+          <div class="ball-num">24</div>
+          <div class="ball-num">25</div>
+          <div class="ball-num">26</div>
+          <div class="ball-num">27</div>
+          <div class="ball-num">28</div>
+          <div class="ball-num">29</div>
+          <div class="ball-num">30</div>
+          <div class="ball-num">31</div>
+          <div class="ball-num">32</div>
+          <div class="ball-num">33</div>
+        </div>
+        <div class="btn">
+          <a href="javascript:void(0);" class="rand_btn" id="rand-red">机选红球</a>
+        </div>
+      </div>
+      <div class="ball-box">
+        <div class="ball-title">
+          <h2>蓝球区</h2>
+        </div>
+        <div class="balls blue-ball">
+          <div class="ball-num">01</div>
+          <div class="ball-num">02</div>
+          <div class="ball-num">03</div>
+          <div class="ball-num">04</div>
+          <div class="ball-num">05</div>
+          <div class="ball-num">06</div>
+          <div class="ball-num">07</div>
+          <div class="ball-num">08</div>
+          <div class="ball-num">09</div>
+          <div class="ball-num">10</div>
+          <div class="ball-num">11</div>
+          <div class="ball-num">12</div>
+          <div class="ball-num">13</div>
+          <div class="ball-num">14</div>
+          <div class="ball-num">15</div>
+          <div class="ball-num">16</div>
+        </div>
+        <div class="btn">
+          <a href="javascript:void(0);" class="rand_btn" id="rand-blue">机选蓝球</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool">
+      <div class="tool-col"><label>倍数：</label><input type="text" name="multiple" id="multiple" value="1"
+          placeholder="请输入倍数"></div>
+      <div class="tool-col"><input type="button" class="default-btn" name="ok-btn" id="ok-btn" value="选好了"></div>
+      <!--data-clipboard-target属性为复制插件添加 指向被复制文本-->
+      <div class="tool-col"><input type="button" class="default-btn" name="copy-btn" id="copy-btn" value="复制结果"
+          data-clipboard-target="#show-money"></div>
+    </div>
+
+    <div class="show">
+      <span class="show-title">投注列表</span>
+      <div class="show-content">
+        <span class="show-content-title">幸运列表</span>
+        <div id="show-money">
+          <!-- <span class="show-info">12,22,33,01,08,09 + 12<a href="javascript:void(0);" class="show-change">修改</a><span class="show-del">删除</span></span> -->
+        </div>
+        <div id="show-num">当前共选中 <span id="show-last-num">0</span> 注,倍数 <span id="show-last-mult">1</span> 倍,共计 <span
+            id="show-last-money">0</span> 元。</div>
+      </div>
+      <div class="show-right">
+        <a href="javascript:void(0);" class="default-btn" id="rand-one">机选1注</a>
+        <a href="javascript:void(0);" class="default-btn" id="rand-three">机选3注</a>
+        <a href="javascript:void(0);" class="default-btn" id="rand-five">机选5注</a>
+        <a href="javascript:void(0);" class="default-btn" id="rand-ten">机选10注</a>
+        <a href="javascript:void(0);" class="rand_btn" id="del-all">清空列表</a>
+      </div>
+      <div class="show-time">
+        <p>距离开奖还有 <span>0</span> 天 <span>0</span> 时 <span>0</span> 分 <span>0</span> 秒</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    "use strict";
+
+    //获取元素
+    function $(sel) {
+      return document.querySelector(sel);
+    }
+
+    //获取元素的所有子节点
+    function getChilds(element) {
+      //获取到所有的子节点
+      var node = element.childNodes;
+      var arr = [];
+      for (let i = 0; i < node.length; i++) {
+        //节点类型为1
+        if (node[i].nodeType == 1) arr[arr.length] = node[i];
+      }
+      return arr;
+    }
+
+    //检查当前选中球的数量 flag传true代表获取选中球的索引数组(+1就得到了选中的球号)
+    /*
+     * @Param object obj 红球或篮球元素对象
+     * @param bool flag true获取选中球索引数组/false表示获取选中球个数
+     *
+     */
+    function getCheckedNum(obj, flag) {
+      let len = obj.length;
+      let now_num = 0; //记录选中个数
+      let arr = []; //记录选中的索引 也就是球号
+      if (!flag) {
+        //获取选中个数
+        for (let i = 0; i < len; i++) {
+          obj[i].index = i;
+          if (obj[i].getAttribute('class').indexOf('active') !== -1) now_num++;
+        }
+        return now_num;
+      } else {
+        //获取选中球索引数组
+        for (let i = 0; i < len; i++) {
+          obj[i].index = i;
+          //直接把标签内的号码压入
+          if (obj[i].getAttribute('class').indexOf('active') !== -1) arr.push(obj[i].innerHTML);
+        }
+        return arr;
+      }
+    }
+
+    //obj为对象 max最大能选中球的个数
+    /**
+     * @param obj 红球或篮球元素对象
+     * @param max 最大允许选中球个数
+     */
+    function ballClick(obj, max) {
+      let len = obj.length;
+      for (let i = 0; i < len; i++) {
+        obj[i].index = i;
+        obj[i].onclick = function () {
+          this.setAttribute('class', this.getAttribute('class').indexOf('active') !== -1 ? 'ball-num' :
+            'ball-num active');
+          if (getCheckedNum(obj, false) > max) this.setAttribute('class', 'ball-num');
+        }
+      }
+    }
+
+    //随机选球 obj为红球或篮球 num为数量 flag为true就改变对应球样式 否则就不改变
+    /*
+     * 
+     * @param object obj 红球或篮球元素对象
+     * @param number num 需要选中的数量
+     * @param bool flag true同步改变样式/false不改变样式
+     */
+    function randBall(obj, num, flag) {
+      let len = obj.length;
+      //用来存储临时生成的随机数
+      let arr = [];
+
+      if (flag) {
+        //先清空原先选中的球
+        for (let i = 0; i < len; i++) {
+          obj[i].index = i;
+          obj[i].className = 'ball-num';
+        }
+      }
+
+      //随机选中球 外层控制循环次数，即生成几个数
+      for (let i = 0; i < num; i++) {
+        //随机数范围
+        arr[i] = Math.floor(Math.random() * len);
+        //内层控制当前生成的随机数和前一个数进行比较，重复则重新生成，反之存入新数组
+        for (let j = 0; j < i; j++) {
+          if (arr[i] == arr[j]) i--;
+        }
+      }
+
+      if (flag) {
+        len = arr.length;
+        //开始选取对应随机的球
+        for (let i = 0; i < len; i++) {
+          obj[arr[i]].className = 'ball-num active';
+        }
+      } else {
+        //将数组按正序排列
+        arr.sort(function (a, b) {
+          return a - b
+        });
+        len = arr.length;
+        //存储选取对应随机的球号
+        for (let i = 0; i < len; i++) {
+          arr[i] = obj[arr[i]].innerHTML;
+        }
+        return arr;
+      }
+    }
+
+    //修改函数
+    function dataChange(obj) {
+      var change_data = prompt("尽情的修改吧", obj.parentNode.textContent.replace(/[\u4E00-\u9FA5]{4}/igm, ''));
+      if (change_data === null || change_data.length === 0) return;
+      //正则表达式匹配结果里的6+1部分 带空格
+      obj.parentNode.innerHTML = obj.parentNode.innerHTML.replace(/([\d]{2}[, \+]*){7}/igm, change_data);
+    }
+
+    //删除函数
+    function dataDel(obj) {
+      //从当前元素的爷爷元素下删除父元素  删除元素必须有父节点
+      obj.parentNode.parentNode.removeChild(obj.parentNode);
+      //更新条数和价格
+      let last_num = $('#show-last-num'); //获取展示最后选中的个数
+      let last_mult = $('#show-last-mult'); //获取展示最后的倍数
+      let last_money = $('#show-last-money'); //获取展示最后的价格
+      last_num.innerHTML = Number(last_num.innerHTML) - 1;
+      last_money.innerHTML = Number(last_num.innerHTML) * Number(last_mult.innerHTML) * 2;
+    }
+
+    let red_ball = getChilds($('.red-ball')); //获取红球区域所有红球
+    let blue_ball = getChilds($('.blue-ball')); //获取蓝球区域所有蓝球
+    var red_btn = $('#rand-red'); //获取机选红球按钮
+    var blue_btn = $('#rand-blue'); //获取机选蓝球按钮
+    var multiple = $('#multiple'); //获取倍数输入框
+    var ok_btn = $('#ok-btn'); //获取选好了按钮
+    var copy_btn = $('#copy-btn'); //获取复制结果按钮
+    let show_money = $('#show-money'); //获取展示结果区
+    let last_num = $('#show-last-num'); //获取展示最后选中的个数
+    let last_mult = $('#show-last-mult'); //获取展示最后的倍数
+    let last_money = $('#show-last-money'); //获取展示最后的价格
+    let rand_one = $('#rand-one'); //机选1注
+    let rand_three = $('#rand-three'); //机选3注
+    let rand_five = $('#rand-five'); //机选5注
+    let rand_ten = $('#rand-ten'); //机选10注
+    let del_all = $('#del-all'); //清空列表
+
+    //当任一红球发生点击时
+    ballClick(red_ball, 6);
+    //当任一蓝球发生点击时
+    ballClick(blue_ball, 1);
+
+    //机选红球按钮发生点击时
+    red_btn.onclick = function () {
+      randBall(red_ball, 6, true);
+    }
+
+    //机选蓝球按钮发生点击时
+    blue_btn.onclick = function () {
+      randBall(blue_ball, 1, true);
+    }
+
+    //当选好了按钮发生点击时
+    ok_btn.onclick = function () {
+      //如果红球或者蓝球没有选中正确个数
+      if (getCheckedNum(red_ball, false) !== 6 || getCheckedNum(blue_ball, false) !== 1) {
+        alert("请检查红球或蓝球是否选择正确！");
+        return;
+      }
+      //如果倍数为空或者不是小于1-99范围的整数
+      if (Number(multiple.value) > 99 || Number(multiple.value) < 1 || multiple.value.length == 0) {
+        alert('请检查倍数是否输入正确！');
+        return;
+      }
+      //传入true表示获取选中球号  此处表示获取红球选中的球号
+      let red_ids = getCheckedNum(red_ball, true);
+      //此处表示获取蓝球选中的球号
+      let blue_ids = getCheckedNum(blue_ball, true);
+      let len = red_ids.length;
+      let str = "";
+      for (let i = 0; i < len; i++) {
+        str += red_ids[i] + ",";
+      }
+      let data = document.createElement('span');
+      data.className = 'show-info';
+
+      //在此绑定事件
+      data.innerHTML = str.substr(0, str.length - 1) + ' + ' + blue_ids[0] +
+        '<a href="javascript:void(0);" class="show-change" >修改</a><span class="show-del" >删除</span>';
+
+      show_money.appendChild(data);
+
+      last_num.innerHTML = getChilds(show_money).length;
+      last_mult.innerHTML = multiple.value;
+      last_money.innerHTML = Number(last_num.innerHTML) * Number(last_mult.innerHTML) * 2;
+    }
+
+    //当倍数输入框发生键盘弹起事件时
+    multiple.onkeyup = function () {
+      let reg = /^[1-9]{1}[0-9]?$/igm;
+      //test匹配模式
+      if (!reg.test(this.value)) this.value = '';
+    }
+
+    //机选对应次数并追加到元素里面去 num为生成的对应机选次数
+    let randNum = function (num) {
+      //如果倍数为空或者不是小于1-99范围的整数
+      if (Number(multiple.value) > 99 || Number(multiple.value) < 1 || multiple.value.length == 0) {
+        alert('请检查倍数是否输入正确！');
+        return;
+      }
+      //外层循环控制插入的机选数据条数
+      for (let j = 0; j < num; j++) {
+        //传入false表示不改样式获取随机选中球号 此处为红
+        let red_ids = randBall(red_ball, 6, false);
+        //此处表示获取蓝球选中的球号
+        let blue_ids = randBall(blue_ball, 1, false);
+
+        let len = red_ids.length;
+        let str = "";
+        for (let i = 0; i < len; i++) {
+          str += red_ids[i] + ",";
+        }
+        let data = document.createElement('span');
+        data.className = 'show-info';
+        data.innerHTML = str.substr(0, str.length - 1) + ' + ' + blue_ids[0] +
+          '<a href="javascript:void(0);" class="show-change" >修改</a><span class="show-del" >删除</span>';
+        show_money.appendChild(data);
+        //回收变量 
+        red_ids = null;
+        blue_ids = null;
+        str = null;
+        data = null;
+      }
+
+      //以下为更新选中条数价格等
+      last_num.innerHTML = getChilds(show_money).length;
+      last_mult.innerHTML = multiple.value;
+      last_money.innerHTML = last_num.innerHTML * last_mult.innerHTML * 2;
+    }
+
+    //机选1注发生点击时
+    rand_one.onclick = function () {
+      randNum(1);
+    }
+
+    //机选3注发生点击时
+    rand_three.onclick = function () {
+      randNum(3);
+    }
+
+    //机选5注发生点击时
+    rand_five.onclick = function () {
+      randNum(5);
+    }
+
+    //机选3注发生点击时
+    rand_ten.onclick = function () {
+      randNum(10);
+    }
+
+    //清空列表按钮发生点击时
+    del_all.onclick = function () {
+      show_money.innerHTML = '';
+      //以下为更新选中条数价格等
+      last_num.innerHTML = '0';
+      last_mult.innerHTML = multiple.value;
+      last_money.innerHTML = '0';
+    }
+
+    // 当复制结果按钮发生点击
+    copy_btn.onclick = function () {
+      if (getChilds(show_money).length == 0) {
+        alert('请检查列表数据是否为空！');
+        return;
+      }
+      let str = show_money.textContent; //获取show_money下的文本内容
+      str = str.trim(); //去除两端空白
+      str = str.replace(/[\u4E00-\u9FA5]{4}/igm,'\r\n'); //从修改删除  将所有汉字替换成换行符回车符
+      if (execCopy(str)) alert('复制结果成功');
+    }
+
+    //获取任意时间是周几 时间戳
+    function getWeek(timestamp) {
+      var date = new Date(timestamp);
+      return date.getDay() === 0 ? 7 : date.getDay();
+    }
+
+    //获取最近一期的开奖时间
+    /**
+     * @param timestamp 毫秒级时间戳
+     * @param week 当前是周几
+     */
+    function getDrawTime(timestamp, week) {
+      let now = new Date(timestamp);
+      let target; //获取目标开奖时间
+      //获取当前时分秒
+      let now_hour = now.getHours();
+      let now_min = now.getMinutes();
+      if (now_hour >= 21 && now_min >= 15) {
+        //大于等于九点十五 且是周二 周四 周日
+        if (week === 2 || week === 7) {
+          //说明目标时间需要递增2天
+          target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2, 21, 15, 0, 0);
+          return target.getTime();
+        }
+
+        if (week === 4) {
+          //说明需要递增3天
+          target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3, 21, 15, 0, 0);
+          return target.getTime();
+        }
+
+      }
+
+      //否则判断获取最近的开奖日期
+      if (week <= 2) {
+        target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2 - week, 21, 15, 0, 0);
+      } else if (week <= 4) {
+        target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 4 - week, 21, 15, 0, 0);
+      } else {
+        target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7 - week, 21, 15, 0, 0);
+      }
+
+      return target.getTime();
+    }
+    //获取距离开奖倒计时
+    function getDrawCountdown() {
+      //当前时间日期对象
+      let now = new Date();
+      // console.log(now);
+      let timestamp = now.getTime(); //获取当前毫秒级时间戳
+      //获取当前是周几
+      let now_week = getWeek(timestamp);
+      //获取开奖时间
+      let target = getDrawTime(timestamp, now_week);
+
+      //计算倒计时
+      let diff = target - timestamp;
+
+      // console.log(diff);
+
+      //计算倒计时总秒数
+      let diff_sec = Math.ceil(diff / 1000);
+
+      let diff_day, diff_hour, diff_min;
+      diff_day = diff_hour = diff_min = 0;
+      //计算剩余秒数
+      let sec = diff_sec % 60;
+
+      // console.log(sec);
+
+      //如果总秒数 大于60 说明存在分钟
+      if (diff_sec >= 60) diff_min = Math.floor(diff_sec / 60); //计算相差总分钟数
+
+      let min = diff_min % 60;
+
+      //如果总分钟数大于60 说明存在小时
+      if (diff_min >= 60) diff_hour = Math.floor(diff_min / 60); //计算相差总小时数
+
+      let hour = diff_hour % 24;
+
+      //如果总小时数大于24 说明存在天
+      if (diff_hour >= 24) diff_day = Math.floor(diff_hour / 24); //计算相差总天数
+
+      //打印到界面
+      var spans = $('.show-time p').getElementsByTagName('span');
+      spans[0].innerText = diff_day;
+      spans[1].innerText = hour;
+      spans[2].innerText = min;
+      spans[3].innerText = sec;
+    }
+
+    //先执行一次
+    getDrawCountdown();
+
+    //循环打印开奖倒计时
+    let timer = setInterval(function () {
+      getDrawCountdown();
+    }, 500);
+
+    //将文本通过execCommand api复制到系统剪切板
+    function execCopy(text) {
+      let input = document.createElement('textarea');
+      input.style.opacity = 0;
+      input.style.position = 'absolute';
+      input.style.left = '-100000px';
+      document.body.appendChild(input);
+
+      input.value = text;
+      input.select();
+      input.setSelectionRange(0, text.length);
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      return true;
+    }
+  </script>
+</body>
+
+</html>
